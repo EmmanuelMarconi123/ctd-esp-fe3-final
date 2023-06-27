@@ -1,40 +1,30 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
-
+import Button from '@mui/material/Button';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Card = ({ name, username, id }) => {
 
+  const [listadoFavoritos, setListadofavoritos] = useState([])
+
   const addFav = () => {
+    setListadofavoritos(...listadoFavoritos)
+    localStorage.setItem('favoritos', JSON.stringify( listadoFavoritos ))
+
     // Aqui iria la logica para agregar la Card en el localStorage
   }
 
 
-  const [dentista, setDentista] = useState([])
-
-  const url = 'https://jsonplaceholder.typicode.com/users'
-
-
-  useEffect(() => {
-
-    axios.get(url)
-      .then(res => setDentista(res.data))
-
-  }, [])
-
   return (
     <div className="card">
+      <Link to={'detail/' + id}>
+        <img src="./images/doctor.jpg" alt="imagen doctor" className="imgHome" />
+        <h4>{name}</h4>
+        <h5>{username}</h5>
+        <p> The id of this Dentis is: {id}</p>
+      </Link>
 
-      {
-        dentista.map((element) => {
-          return (
-            <div key={element.id}>
-              <h3>{element.name}</h3>
-              <h4></h4>
-            </div>
-          )
-        })
-      }
+      <Button variant="contained" type='submit' onClick={addFav}>Add Favs</Button>
+
 
       {/* En cada card deberan mostrar en name - username y el id */}
 
@@ -42,10 +32,18 @@ const Card = ({ name, username, id }) => {
 
       {/* Ademas deberan integrar la logica para guardar cada Card en el localStorage */}
 
-
-      <button onClick={addFav} className="favButton">Add fav</button>
-    </div>
-  );
+    </div >
+  )
 };
 
 export default Card;
+
+
+
+
+
+
+
+
+
+

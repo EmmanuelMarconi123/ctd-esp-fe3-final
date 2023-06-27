@@ -1,30 +1,47 @@
-import { createContext, useEffect, useState } from "react";
+import axios from "axios";
+import { createContext, useContext, useReducer, useState, useEffect } from "react";
 
-export const initialState = { theme: "", data: [] }
+const ContextGlobal = createContext();
 
-export const ContextGlobal = createContext();
+export const initialState = {theme:true , dentista:[], dentistasFav:[]}
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'getList':
+      return {...state, dentista: action.payload}
+    case 'dark':
+      return {...state, theme: action.payload}
+    default:
+      throw new Error()
+  }
+}
 
 
 export const ContextProvider = ({ children }) => {
-  //Aqui deberan implementar la logica propia del Context, utilizando el hook useMemo
 
-  const [dark, setDark] = useState(false)
+  const url = 'https://jsonplaceholder.typicode.com/users'
 
-  const data = {
-    dark,
-    setDark
-  }
+  // const [modoOscuro, setModoOscuro] = useState()
 
- useEffect(() => {
-    const page = document.body
-    page.classList.toggle('dark')
-  }, [dark])
+  const [state, dispatch] = useReducer(reducer, initialState)
 
+ 
+  useEffect(()=>{
+    axios.get(url)
+    .then((resp) => {dispatch({type: 'getList', payload: resp.data})})
+  }, [])
+
+
+
+  // useEffect(() => {
+  //   document.body.classList.toggle('dark');
+  // }, [modoOscuro]);
 
   return (
-    <ContextGlobal.Provider value={{ data }}>
+    <ContextGlobal.Provider value={{ state, dispatch }}>
       {children}
     </ContextGlobal.Provider>
   );
 };
+
+export const useContexGlobal = ()=> useContext(ContextGlobal)

@@ -27,7 +27,6 @@ function App() {
             <Route path={routes.pageNotFund} element={<PageNotFound />} />
 
 
-
           </Routes>
 
           <Footer />
