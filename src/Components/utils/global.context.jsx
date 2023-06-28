@@ -11,6 +11,8 @@ const reducer = (state, action) => {
       return {...state, dentista: action.payload}
     case 'dark':
       return {...state, theme: action.payload}
+    case 'addFavs':
+      return{ ...state, dentistasFav: action.payload}
     default:
       throw new Error()
   }
@@ -31,11 +33,6 @@ export const ContextProvider = ({ children }) => {
     .then((resp) => {dispatch({type: 'getList', payload: resp.data})})
   }, [])
 
-
-
-  // useEffect(() => {
-  //   document.body.classList.toggle('dark');
-  // }, [modoOscuro]);
 
   return (
     <ContextGlobal.Provider value={{ state, dispatch }}>
