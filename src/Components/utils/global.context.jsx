@@ -1,18 +1,20 @@
 import axios from "axios";
-import { createContext, useContext, useReducer, useState, useEffect } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 
 const ContextGlobal = createContext();
 
-export const initialState = {theme:true , dentista:[], dentistasFav:[]}
+export const initialState = { theme: true, dentista: [], dentistasFav: JSON.parse(localStorage.getItem('favoritos')) || [] }
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'getList':
-      return {...state, dentista: action.payload}
+      return { ...state, dentista: action.payload }
     case 'dark':
-      return {...state, theme: action.payload}
+      return { ...state, theme: action.payload }
     case 'addFavs':
-      return{ ...state, dentistasFav: action.payload}
+      return { ...state, dentistasFav: action.payload }
+    case "delete_fav":
+      return { ...state, dentistasFav: action.payload };
     default:
       throw new Error()
   }
@@ -23,15 +25,16 @@ export const ContextProvider = ({ children }) => {
 
   const url = 'https://jsonplaceholder.typicode.com/users'
 
-  // const [modoOscuro, setModoOscuro] = useState()
-
   const [state, dispatch] = useReducer(reducer, initialState)
 
- 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get(url)
-    .then((resp) => {dispatch({type: 'getList', payload: resp.data})})
+      .then((resp) => { dispatch({ type: 'getList', payload: resp.data }) })
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem('favoritos', JSON.stringify(state.dentistasFav))
+  }, [state.dentistasFav])
 
 
   return (
@@ -41,4 +44,4 @@ export const ContextProvider = ({ children }) => {
   );
 };
 
-export const useContexGlobal = ()=> useContext(ContextGlobal)
+export const useContexGlobal = () => useContext(ContextGlobal)

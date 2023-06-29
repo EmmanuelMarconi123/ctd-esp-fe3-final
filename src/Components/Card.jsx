@@ -1,38 +1,56 @@
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { useContexGlobal } from './utils/global.context';
+import { Typography } from '@mui/material';
+import { useState } from 'react';
+
 
 const Card = ({ name, username, id }) => {
 
   const { state, dispatch } = useContexGlobal()
+  const { isFavorite, setIsFavorite } = useState(false)
 
   // Aqui iria la logica para agregar la Card en el localStorage
 
   const addFav = () => {
 
     let foundObjet = (state.dentistasFav.find(obj => obj.id === id))
-    
-    if(foundObjet){
+
+    if (foundObjet) {
       alert('you cannot add the same dentist twice')
-    }else{
+      setIsFavorite(true)
+    } else {
       dispatch({
         type: 'addFavs', payload: [...state.dentistasFav, { name: name, userName: username, id: id }]
-      });    
+      });
     }
   };
-  localStorage.setItem('favoritos', JSON.stringify(state.dentistasFav))
+
+  const removeFav = () => {
+    const favoritos = state.dentistasFav;
+    const updatedFavorites = favoritos.find((card) => card.id !== id);
+
+    if (updatedFavorites) {
+      const newFavorites = favoritos.filter((card) => card.id !== id);
+      dispatch({ type: "delete_fav", payload: newFavorites });
+      alert("Este dentista fue eliminado de tus favoritos");
+      setIsFavorite(false);
+    } else {
+      alert("Este dentista no puede ser eliminado de tus favoritos");
+    }
+  };
 
   return (
     <div className="card">
       <Link to={'detail/' + id}>
         <img src="./images/doctor.jpg" alt="imagen doctor" className="imgHome" />
-        <h4>{name}</h4>
-        <h5>{username}</h5>
-        <p> The id of this Dentis is: {id}</p>
+        <Typography variant='h5'>{name}</Typography>
+        <Typography variant='h6'>{username}</Typography>
+        <p> Dentist ID: {id}</p>
       </Link>
 
-      <Button variant="contained" type='submit' onClick={addFav}>
-        Add Favs
+      <Button variant="contained" type='submit' onClick={isFavorite ? removeFav : addFav}>
+        {isFavorite ? 'Delete Favs' : 'Add Favs'}
       </Button>
 
 

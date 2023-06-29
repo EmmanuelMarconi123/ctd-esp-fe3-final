@@ -1,5 +1,6 @@
-import { Button, Link, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Card from "../Components/Card";
+import { useContexGlobal } from "../Components/utils/global.context";
 
 
 
@@ -9,20 +10,21 @@ import Card from "../Components/Card";
 
 const Favs = () => {
 
-  const dentistFav = JSON.parse(localStorage.getItem('favoritos'))
+  const dentistFavorite = JSON.parse(localStorage.getItem('favoritos'))
 
-  console.log(dentistFav);
+  const {state} = useContexGlobal()
 
   return (
     <>
       <Typography color={'primary'} variant="h4" align="center" >Dentists Favs</Typography>
       <div className="card-grid">
-        {dentistFav &&
-          dentistFav.map((dentista) => (
+        {state.dentistasFav &&
+          state.dentistasFav.map((dentista) => (
             <Card
               name={dentista.name}
               username={dentista.userName}
               id={dentista.id}
+              key={dentista.id}
             />
           ))}
       </div>

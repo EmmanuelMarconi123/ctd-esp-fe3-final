@@ -24,7 +24,7 @@ const Navbar = () => {
     <nav>
       <Link to={routes.home}><h4 className='link'> HOME </h4></Link>
       <Link to={routes.contact}><h4 className='link'>CONTACT</h4></Link>
-      <Link to={routes.datail}><h4 className='link'>DETAILS</h4></Link>
+      {/* <Link to={routes.datail}><h4 className='link'>DETAILS</h4></Link> */}
       <Link to={routes.favs}><h4 className='link'>FAVS</h4></Link>
 
       {/* Aqui deberan agregar los liks correspondientes a las rutas definidas */}

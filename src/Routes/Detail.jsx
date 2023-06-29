@@ -18,11 +18,7 @@ const Detail = () => {
       .then(res => setDent(res.data))
   }, [id])
 
-  console.log(dent);
-
-
-
-  // Consumiendo el parametro dinamico de la URL deberan hacer un fetch a un user en especifico
+ // Consumiendo el parametro dinamico de la URL deberan hacer un fetch a un user en especifico
 
   return (
     <>
