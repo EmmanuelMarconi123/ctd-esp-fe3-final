@@ -115,6 +115,7 @@ form{
   height: auto;
   flex-wrap: wrap;
   margin: 0 auto;
+  
 }
 
 table {
@@ -143,5 +144,6 @@ tr:nth-child(even) {
 .dark > a {
   color: white;
 }
+
 
 

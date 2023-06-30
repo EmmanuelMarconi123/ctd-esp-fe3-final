@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Card from '../Components/Card'
 import { useContexGlobal } from '../Components/utils/global.context'
 
@@ -12,7 +13,7 @@ const Home = () => {
 
   return (
     <main className="" >
-      <h1>List of Dentist</h1>
+      <Typography sx={{ fontSize: 50 }} variant='h1' color="primary"> List of Dentist</Typography>
       <div className='card-grid'>
         {state.dentista.map(dentista => (
           <Card

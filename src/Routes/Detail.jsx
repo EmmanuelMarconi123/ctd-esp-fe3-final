@@ -21,8 +21,7 @@ const Detail = () => {
  // Consumiendo el parametro dinamico de la URL deberan hacer un fetch a un user en especifico
 
   return (
-    <>
-
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
        <Box sx={{ minWidth: 275 }}>
         <Card variant="outlined">
           <CardContent>
@@ -48,7 +47,7 @@ const Detail = () => {
 
       {/* aqui deberan renderizar la informacion en detalle de un user en especifico */}
       {/* Deberan mostrar el name - email - phone - website por cada user en especifico */}
-    </>
+    </div>
   )
 }
 export default Detail

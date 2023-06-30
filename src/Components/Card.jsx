@@ -33,7 +33,6 @@ const Card = ({ name, username, id }) => {
     if (state.dentistasFav.length >= 0) {
       const updatedFavorites = state.dentistasFav.filter((card) => card.id !== id)
       dispatch({type: 'delete_fav', payload: updatedFavorites})
-      alert('This dentist was removed from you favorite database')
       setIsFavorite(false)
     }};
 

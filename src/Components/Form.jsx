@@ -41,7 +41,7 @@ const Form = () => {
               type="text"
               id="outlined-basic"
               name='name'
-              label="Nombre"
+              label="Name"
               variant="outlined"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -71,7 +71,7 @@ const Form = () => {
               type="text"
               id="outlined-basic"
               name='coment'
-              label="Comentarios"
+              label="Coment"
               variant="outlined"
               onChange={handleChange}
               value={values.coment}
@@ -80,7 +80,9 @@ const Form = () => {
         </Grid>
         <Button variant="contained" type='submit'>Send</Button>
       </form>
-      {mensaje2 && <p>¡Thank you so much {localStorage.getItem('userName')}, we will contact you at the following email {localStorage.getItem('email')}!</p>}
+      {mensaje2 && <p style={{ color: 'blue', fontSize: '16px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>¡Thank you so much {localStorage.getItem('userName')}, we will contact you at the following email {localStorage.getItem('email')}!</p>}
+
+
     </>
   );
 };
