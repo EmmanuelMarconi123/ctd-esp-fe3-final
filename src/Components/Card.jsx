@@ -2,54 +2,53 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { useContexGlobal } from './utils/global.context';
 import { Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const Card = ({ name, username, id }) => {
 
   const { state, dispatch } = useContexGlobal()
-  const { isFavorite, setIsFavorite } = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // Aqui iria la logica para agregar la Card en el localStorage
 
+  useEffect(()=>{
+    console.log('se renderizo la card nuevamente');
+  },[isFavorite])
+ 
+  
   const addFav = () => {
-
     let foundObjet = (state.dentistasFav.find(obj => obj.id === id))
-
     if (foundObjet) {
       alert('you cannot add the same dentist twice')
-      setIsFavorite(true)
     } else {
       dispatch({
         type: 'addFavs', payload: [...state.dentistasFav, { name: name, userName: username, id: id }]
       });
     }
+    setIsFavorite(true)
   };
 
   const removeFav = () => {
-    const favoritos = state.dentistasFav;
-    const updatedFavorites = favoritos.find((card) => card.id !== id);
+    if (state.dentistasFav.length >= 0) {
+      const updatedFavorites = state.dentistasFav.filter((card) => card.id !== id)
+      dispatch({type: 'delete_fav', payload: updatedFavorites})
+      alert('This dentist was removed from you favorite database')
+      setIsFavorite(false)
+    }};
 
-    if (updatedFavorites) {
-      const newFavorites = favoritos.filter((card) => card.id !== id);
-      dispatch({ type: "delete_fav", payload: newFavorites });
-      alert("Este dentista fue eliminado de tus favoritos");
-      setIsFavorite(false);
-    } else {
-      alert("Este dentista no puede ser eliminado de tus favoritos");
-    }
-  };
 
   return (
-    <div className="card">
-      <Link to={'detail/' + id}>
+    <div key={id} className="card">
+      
+      <Link to={'/detail/' + id}>
         <img src="./images/doctor.jpg" alt="imagen doctor" className="imgHome" />
         <Typography variant='h5'>{name}</Typography>
         <Typography variant='h6'>{username}</Typography>
         <p> Dentist ID: {id}</p>
       </Link>
 
-      <Button variant="contained" type='submit' onClick={isFavorite ? removeFav : addFav}>
+      <Button variant="contained" type='submit' onClick={ isFavorite ? removeFav : addFav }>
         {isFavorite ? 'Delete Favs' : 'Add Favs'}
       </Button>
 

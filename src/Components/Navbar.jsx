@@ -13,15 +13,23 @@ const Navbar = () => {
   const { state, dispatch } = useContexGlobal()
 
   const toggle = () => {
-    dispatch({type: 'dark', payload: !state.theme})
-  }
+    const newTheme = !state.theme;
+    dispatch({ type: "dark", payload: newTheme });
+    localStorage.setItem('theme', JSON.stringify(newTheme));
+  };
+  
+  useEffect(() => {
+    if (localStorage.getItem('theme') !== null) {
+      dispatch({ type: "dark", payload:   JSON.parse(localStorage.getItem('theme'))});
+    }
+  }, []);
 
   useEffect(() => {
-   document.body.classList.toggle('dark');
- }, [state.theme]);
+    document.body.classList.toggle("dark", state.theme);
+  }, [state.theme]);
 
   return (
-    <nav>
+    <nav className="navbar-container">
       <Link to={routes.home}><h4 className='link'> HOME </h4></Link>
       <Link to={routes.contact}><h4 className='link'>CONTACT</h4></Link>
       {/* <Link to={routes.datail}><h4 className='link'>DETAILS</h4></Link> */}
@@ -30,7 +38,7 @@ const Navbar = () => {
       {/* Aqui deberan agregar los liks correspondientes a las rutas definidas */}
       {/* Deberan implementar ademas la logica para cambiar de Theme con el button */}
       <Button variant="contained" onClick={toggle}>Theme</Button>
-      
+
     </nav>
   )
 }

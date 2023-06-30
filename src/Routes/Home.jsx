@@ -6,7 +6,9 @@ import { useContexGlobal } from '../Components/utils/global.context'
 const Home = () => {
 
   const { state } = useContexGlobal()
-  console.log(state);
+
+  console.log('estos son mis favs:');
+  console.log(state.dentistasFav);
 
   return (
     <main className="" >

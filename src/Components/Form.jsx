@@ -78,7 +78,7 @@ const Form = () => {
             />
           </Grid>
         </Grid>
-        <Button variant="contained" type='submit'>Enviar</Button>
+        <Button variant="contained" type='submit'>Send</Button>
       </form>
       {mensaje2 && <p>¡Thank you so much {localStorage.getItem('userName')}, we will contact you at the following email {localStorage.getItem('email')}!</p>}
     </>

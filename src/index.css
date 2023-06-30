@@ -33,13 +33,21 @@ h1{
   text-align: center;
 }
 
-nav{
+.navbar-container {
   display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  padding: 1rem;
-
+  align-items: center; 
+  justify-content: flex-start;
+  margin-top: 10px;
 }
+
+.navbar-container .link {
+  margin: 0 10px; 
+}
+
+.navbar-container button {
+  margin-left: auto;
+}
+
 
 a{
   color: #000;

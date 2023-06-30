@@ -3,7 +3,7 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 
 const ContextGlobal = createContext();
 
-export const initialState = { theme: true, dentista: [], dentistasFav: JSON.parse(localStorage.getItem('favoritos')) || [] }
+export const initialState = { theme: JSON.parse(localStorage.getItem('theme')) || false, dentista: [], dentistasFav: JSON.parse(localStorage.getItem('favoritos')) || [] }
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -14,12 +14,11 @@ const reducer = (state, action) => {
     case 'addFavs':
       return { ...state, dentistasFav: action.payload }
     case "delete_fav":
-      return { ...state, dentistasFav: action.payload };
+      return { ...state, dentistasFav: action.payload }
     default:
       throw new Error()
   }
 }
-
 
 export const ContextProvider = ({ children }) => {
 
